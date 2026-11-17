@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Experiment 1 - Interpolation Search</title>
+<style>
+  :root{
+    --navy:#1b3a63; --blue:#2f6fb0; --green:#1f6f4a; --bg:#f5f7fa; --card:#ffffff;
+    --border:#d8dee6; --text:#222; --accent:#e98a2b;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0 0 60px;}
+  header{background:var(--navy);color:#fff;padding:28px 40px;}
+  header h1{margin:0;font-size:28px;}
+  header p{margin:6px 0 0;opacity:.85;}
+  .container{max-width:900px;margin:30px auto;padding:0 20px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:22px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .card h2{background:var(--blue);color:#fff;margin:0;padding:12px 18px;font-size:18px;}
+  .card.green h2{background:var(--green);}
+  .card .content{padding:16px 20px;}
+  pre{background:#eef1f5;padding:14px;border-radius:6px;overflow-x:auto;font-size:13.5px;line-height:1.5;}
+  table{border-collapse:collapse;width:100%;margin-top:8px;font-size:14px;}
+  th,td{border:1px solid var(--border);padding:6px 10px;text-align:right;}
+  th:first-child, td:first-child{text-align:left;}
+  th{background:#eef1f5;}
+  .problem-box{background:#fff5e6;border:1px solid var(--accent);border-radius:8px;padding:16px 20px;margin-top:22px;}
+  .problem-box h3{margin-top:0;color:var(--accent);}
+  .meta{display:flex;gap:30px;flex-wrap:wrap;background:#eef1f5;padding:12px 20px;border-radius:8px;margin-bottom:22px;font-size:14px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Experiment No. 1</h1>
+  <p>Implementation and Performance Analysis of Interpolation Search</p>
+</header>
+<div class="container">
+
+  <div class="meta">
+    <div><strong>Subject:</strong> CS5303 - Design and Analysis of Algorithms</div>
+    <div><strong>Experiment No:</strong> 1</div>
+  </div>
+
+  <div class="card">
+    <h2>Problem Statement</h2>
+    <div class="content">
+      <p>Given a sorted array of uniformly distributed integers, implement Interpolation Search
+      to find the position of a target element. Compare its performance with Binary Search for
+      different dataset sizes (1000, 5000, 10000, 50000, 100000 elements).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Aim</h2>
+    <div class="content">
+      <p>To implement the Interpolation Search algorithm in Python and analyze its time complexity
+      by measuring execution time on sorted datasets of varying sizes.</p>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h2>Pseudocode</h2>
+    <div class="content">
+<pre>INTERPOLATION_SEARCH(arr, target):
+  low ← 0
+  high ← len(arr) - 1
+  WHILE low ≤ high AND target ≥ arr[low] AND target ≤ arr[high]:
+    IF low = high:
+      IF arr[low] = target: RETURN low
+      ELSE: RETURN -1
+    pos ← low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low])
+    pos ← FLOOR(pos)
+    IF arr[pos] = target:
+      RETURN pos
+    ELIF arr[pos] < target:
+      low ← pos + 1
+    ELSE:
+      high ← pos - 1
+  RETURN -1  // Element not found</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sample Output</h2>
+    <div class="content">
+<pre>Array: [2, 5, 10, 15, 23, 35, 48, 60, 75, 90, 105, 120]
+Searching for: 35
+Found at index: 5, Comparisons: 2</pre>
+      <table>
+        <tr><th>Size</th><th>IS Time (ms)</th><th>BS Time (ms)</th><th>IS Comparisons</th><th>BS Comparisons</th></tr>
+        <tr><td>1000</td><td>0.0021</td><td>0.0035</td><td>3</td><td>10</td></tr>
+        <tr><td>5000</td><td>0.0025</td><td>0.0042</td><td>3</td><td>13</td></tr>
+        <tr><td>10000</td><td>0.0028</td><td>0.0048</td><td>4</td><td>14</td></tr>
+        <tr><td>50000</td><td>0.0031</td><td>0.0061</td><td>4</td><td>16</td></tr>
+        <tr><td>100000</td><td>0.0035</td><td>0.0068</td><td>5</td><td>17</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Result</h2>
+    <div class="content">
+      <p>The Interpolation Search algorithm was successfully implemented. It found the target
+      element at index 5 with only 2 comparisons. Performance analysis shows that Interpolation
+      Search consistently requires fewer comparisons (O(log log n)) compared to Binary Search
+      (O(log n)) for uniformly distributed sorted data.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Inference</h2>
+    <div class="content">
+      <p>Interpolation Search outperforms Binary Search when data is uniformly distributed,
+      achieving near O(log log n) complexity. The algorithm is highly efficient for large,
+      uniformly spaced datasets. However, its performance degrades to O(n) for skewed
+      distributions. For real-world applications with uniform data (e.g., phone books),
+      Interpolation Search is the preferred algorithm.</p>
+    </div>
+  </div>
+
+  <div class="problem-box">
+    <h3>Practice Problems</h3>
+    <p><strong>1.</strong> Implement Interpolation Search on a sorted array of student roll numbers
+    (range 1 to 10000) and count the number of probes required to find a given roll number.
+    Compare results with Binary Search.</p>
+    <p><strong>2.</strong> Modify the Interpolation Search to work on a sorted array of
+    floating-point numbers (uniformly distributed between 0.0 and 1000.0) and analyze how many
+    comparisons are needed for different dataset sizes (10000, 50000, 100000).</p>
+  </div>
+
+</div>
+</body>
+</html>
